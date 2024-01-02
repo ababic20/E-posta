@@ -18,25 +18,21 @@ CREATE TABLE `message` (
   CONSTRAINT `fk_message_user`
     FOREIGN KEY (`sender`)
     REFERENCES `user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_message_user1`
     FOREIGN KEY (`recipient`)
     REFERENCES `user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
-
-
-SELECT * FROM user;
-
-SELECT * FROM message;
 
 
 
 INSERT INTO `user` (`name`, `last_name`, `email`, `password`, `private_dh_key`, `public_dh_key`)
 VALUES ('John', 'Doe', 'test1@gmail.com', '123', 'private_key', 'public_key');
-
+INSERT INTO `user` (`name`, `last_name`, `email`, `password`, `private_dh_key`, `public_dh_key`)
+VALUES ('John', 'Doe', 'test2@gmail.com', '123', 'private_key', 'public_key');
 
 -- Assuming user IDs 1, 2, and 3 exist in the 'user' table
 
@@ -48,13 +44,9 @@ VALUES
   ('Important Update', 'Please check the latest update.',1, 2, 0),
   ('Alooo', 'Sta ima', 2, 1, 0);
 
+SELECT * FROM user;
 
+SELECT * FROM message;
 
+DELETE FROM message WHERE id=10
 
-
-DELETE FROM user WHERE id=3;
-
-
-
-DROP TABLE user;
-DROP TABLE message;
