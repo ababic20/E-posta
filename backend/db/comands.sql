@@ -33,8 +33,28 @@ SELECT * FROM user;
 SELECT * FROM message;
 
 
-DROP TABLE user;
-DROP TABLE message;
 
 INSERT INTO `user` (`name`, `last_name`, `email`, `password`, `private_dh_key`, `public_dh_key`)
 VALUES ('John', 'Doe', 'test1@gmail.com', '123', 'private_key', 'public_key');
+
+
+-- Assuming user IDs 1, 2, and 3 exist in the 'user' table
+
+-- Inserting three messages
+INSERT INTO `message` (`title`, `content`, `sender`, `recipient`, `read`)
+VALUES
+  ('Hello', 'Hi there!', 1, 2, 0),
+  ('Meeting', 'Lets meet tomorrow.', 2, 1, 0),
+  ('Important Update', 'Please check the latest update.',1, 2, 0),
+  ('Alooo', 'Sta ima', 2, 1, 0);
+
+
+
+
+
+DELETE FROM user WHERE id=3;
+
+
+
+DROP TABLE user;
+DROP TABLE message;

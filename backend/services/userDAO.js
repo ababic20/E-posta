@@ -14,6 +14,14 @@ class UserDAO {
 		return data;
 	}
 
+	insert = async function (user) {
+		this.database.connectToDb();
+		const sql = "INSERT INTO `user` (`name`, `last_name`, `email`, `password`, `private_dh_key`, `public_dh_key`) VALUES (?, ?, ?, ?, ?, ?)";
+		var data = await this.database.executeQuery(sql, [user.name, user.last_name,user.email,user.password,user.private_dh_key, user.public_dh_key]);
+		this.database.closeConectionToDb();
+		return data;
+	}
+
 }
 
 module.exports = UserDAO;
