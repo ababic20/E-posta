@@ -1,22 +1,20 @@
 CREATE TABLE `user` (
-  `id` INT NOT NULL,
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `last_name` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL UNIQUE,
   `password` VARCHAR(255) NOT NULL,
   `private_dh_key` TEXT NOT NULL,
-  `public_dh_key` TEXT NOT NULL,
-  PRIMARY KEY (`id`)
+  `public_dh_key` TEXT NOT NULL
 );
 
 CREATE TABLE `message` (
-  `id` INT NOT NULL,
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `title` VARCHAR(255) NOT NULL,
   `content` TEXT NOT NULL,
   `sender` INT NOT NULL,
   `recipient` INT NOT NULL,
   `read` TINYINT NOT NULL,
-  PRIMARY KEY (`id`),
   CONSTRAINT `fk_message_user`
     FOREIGN KEY (`sender`)
     REFERENCES `user` (`id`)
@@ -29,6 +27,14 @@ CREATE TABLE `message` (
     ON UPDATE NO ACTION
 );
 
+
 SELECT * FROM user;
 
 SELECT * FROM message;
+
+
+DROP TABLE user;
+DROP TABLE message;
+
+INSERT INTO `user` (`name`, `last_name`, `email`, `password`, `private_dh_key`, `public_dh_key`)
+VALUES ('John', 'Doe', 'test1@gmail.com', '123', 'private_key', 'public_key');
