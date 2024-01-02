@@ -19,6 +19,9 @@ class RestUser {
                 var decryptedData = encryption.decryptData(message.content,aesKey)
                 message.content = decryptedData
                 message.title = decryptedTitle
+                var uDao = new UserDAO();
+                message.sender = (await uDao.getEmailById(message.sender))[0].email
+                message.recipient = (await uDao.getEmailById(message.recipient))[0].email
             }    
             res.status(200).json(messages)
         });
@@ -30,8 +33,19 @@ class RestUser {
         console.log(userID)
         var mDao = new MessageDAO();
 
-        mDao.getReceivedByUser(userID).then((messages) => {
-                res.status(200).json(messages)
+        mDao.getReceivedByUser(userID).then( async (messages) => {
+            for(let message of messages)
+            {   
+                var aesKey = await encryption.generateAesKey(message.sender, message.recipient) // flipped on purpose
+                var decryptedTitle= encryption.decryptData(message.title,aesKey)
+                var decryptedData = encryption.decryptData(message.content,aesKey)
+                message.content = decryptedData
+                message.title = decryptedTitle
+                var uDao = new UserDAO();
+                message.sender = (await uDao.getEmailById(message.sender))[0].email
+                message.recipient = (await uDao.getEmailById(message.recipient))[0].email
+            }    
+            res.status(200).json(messages)
         });
     }
 

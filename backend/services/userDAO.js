@@ -21,6 +21,15 @@ class UserDAO {
 		this.database.closeConectionToDb();
 		return data;
 	}
+
+	getEmailById = async function (id) {
+		this.database.connectToDb();
+		let sql = "SELECT email FROM user WHERE id =?;"
+		var data = await this.database.executeQuery(sql, [id]);
+		this.database.closeConectionToDb();
+		return data;
+	}
+	
 	getUserByEmail = async function (email) {
 		this.database.connectToDb();
 		let sql = "SELECT * FROM user WHERE email =?;"
