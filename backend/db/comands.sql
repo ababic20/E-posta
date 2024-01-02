@@ -48,5 +48,5 @@ SELECT * FROM user;
 
 SELECT * FROM message;
 
-DELETE FROM message WHERE id=10
+DELETE FROM message WHERE id=11
 

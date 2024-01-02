@@ -15,8 +15,10 @@ class RestUser {
             for(let message of messages)
             {   
                 var aesKey = await encryption.generateAesKey(message.sender, message.recipient) // flipped on purpose
+                var decryptedTitle= encryption.decryptData(message.title,aesKey)
                 var decryptedData = encryption.decryptData(message.content,aesKey)
                 message.content = decryptedData
+                message.title = decryptedTitle
             }    
             res.status(200).json(messages)
         });
@@ -54,7 +56,9 @@ class RestUser {
 
         var aes = encryption.generateAesKey(sender[0].id,recepient[0].id)
         var encryptedContent = await encryption.encryptData(message.content, aes)
+        var encryptedTitle = await encryption.encryptData(message.title, aes)
         message.content = encryptedContent
+        message.title = encryptedTitle
         var mDao = new MessageDAO();
 
         mDao.sentMessage(message,sender[0].id,recepient[0].id).then((data) => {
