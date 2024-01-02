@@ -9,6 +9,7 @@ import Root from './layouts/Root';
 import ErrorElement from './layouts/ErrorElement';
 import Login from './auth/Login';
 import Registration from './auth/Registration';
+import Logout from './auth/Logout';
 
 
 const router = createBrowserRouter([
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
         path: 'registration',
         element: <Registration />,
       },
+      {
+        path: 'logout',
+        element: <Logout></Logout>
+      }
     ],
   },
 ]);
