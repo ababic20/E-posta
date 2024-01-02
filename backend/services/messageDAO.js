@@ -29,10 +29,11 @@ class MessageDAO {
 		return data;
 	}
 
-	sentMessage = async function (message) {
+	sentMessage = async function (message,senderID, recipeintID) {
 		this.database.connectToDb();
+		
 		let sql = "INSERT INTO `message` (`title`, `content`, `sender`, `recipient`, `read`) VALUES (?, ?, ?, ?, ?);"
-		var data = await this.database.executeQuery(sql, [message.title,message.content,message.sender,message.recipient,0]);
+		var data = await this.database.executeQuery(sql, [message.title,message.content,senderID,recipeintID,0]);
 		this.database.closeConectionToDb();
 		return data;
 	}

@@ -14,6 +14,22 @@ class UserDAO {
 		return data;
 	}
 
+	getUserById = async function (id) {
+		this.database.connectToDb();
+		let sql = "SELECT * FROM user WHERE id =?;"
+		var data = await this.database.executeQuery(sql, [id]);
+		this.database.closeConectionToDb();
+		return data;
+	}
+	getUserByEmail = async function (email) {
+		this.database.connectToDb();
+		let sql = "SELECT * FROM user WHERE email =?;"
+		var data = await this.database.executeQuery(sql, [email]);
+		this.database.closeConectionToDb();
+		return data;
+	}
+
+
 	insert = async function (user) {
 		this.database.connectToDb();
 		const sql = "INSERT INTO `user` (`name`, `last_name`, `email`, `password`, `private_dh_key`, `public_dh_key`) VALUES (?, ?, ?, ?, ?, ?)";

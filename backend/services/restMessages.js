@@ -1,49 +1,67 @@
 const MessageDAO = require("./messageDAO.js");
+const Encryption = require("./encryption.js");
+const encryption = new Encryption();
+const UserDAO = require("./userDAO.js");
+
 
 class RestUser {
 
-
-
     getSentMessages= function (req, res) {
         res.type("application/json");
-        let uDao = new MessageDAO();
         var userID = req.query.id
         console.log(userID)
-        uDao.getSentByUser(userID).then((messages) => {
-                res.status(200).json(messages)
+        var mDao = new MessageDAO();
+        mDao.getSentByUser(userID).then( async (messages) => {
+            for(let message of messages)
+            {   
+                var aesKey = await encryption.generateAesKey(message.sender, message.recipient) // flipped on purpose
+                var decryptedData = encryption.decryptData(message.content,aesKey)
+                message.content = decryptedData
+            }    
+            res.status(200).json(messages)
         });
     }
 
     getReceivedMessages= function (req, res) {
         res.type("application/json");
-        let uDao = new MessageDAO();
         var userID = req.query.id
         console.log(userID)
-        uDao.getReceivedByUser(userID).then((messages) => {
+        var mDao = new MessageDAO();
+
+        mDao.getReceivedByUser(userID).then((messages) => {
                 res.status(200).json(messages)
         });
     }
 
     setMessageStatus= function (req, res) {
         res.type("application/json");
-        let uDao = new MessageDAO();
         var messageID = req.query.id
-        console.log(messageID)
-        uDao.changeMessageStatus(messageID).then((data) => {
+        var mDao = new MessageDAO();
+
+        mDao.changeMessageStatus(messageID).then((data) => {
                 res.status(200).json("Message status updated")
         });
     }
 
-    sendMessage= function (req, res) {
-        res.type("application/json");
-        let uDao = new MessageDAO();
 
-        uDao.sentMessage(req.body).then((data) => {
+    sendMessage= async function (req, res) {
+        res.type("application/json");
+        var message = req.body
+        var uDao = new UserDAO();
+        var sender = await uDao.getUserByEmail(req.body.sender)
+        uDao = new UserDAO();
+        var recepient =  await uDao.getUserByEmail(req.body.recipient)
+
+        var aes = encryption.generateAesKey(sender[0].id,recepient[0].id)
+        var encryptedContent = await encryption.encryptData(message.content, aes)
+        message.content = encryptedContent
+        var mDao = new MessageDAO();
+
+        mDao.sentMessage(message,sender[0].id,recepient[0].id).then((data) => {
                 res.status(200).json("Message sent")
         });
     }
       
-
 }
 
 module.exports = RestUser;
