@@ -1,14 +1,22 @@
 import { NavLink, Outlet } from "react-router-dom";
 import './Root.css';
+import { useEffect, useState } from "react";
 
 const Root = () => {
+
+    const [loggedIn, setLoggedIn] = useState(false);
+    
+    useEffect(() => {
+        setLoggedIn(localStorage.getItem("loggedIn"));
+    }, []);
+
     return (
         <div>
             <div className="nav">
                 <NavLink to="/">Home</NavLink>
-                <NavLink to="registration">Registration</NavLink>
-                <NavLink to="login" >Login</NavLink>
-                <NavLink to="logout">Logout</NavLink>
+                {!loggedIn && <NavLink to="registration">Registration</NavLink>}
+                {!loggedIn && <NavLink to="login" >Login</NavLink>}
+                {loggedIn && <NavLink to="logout">Logout</NavLink>}
             </div>
             <Outlet></Outlet>
         </div>
