@@ -13,6 +13,7 @@ import Registration from './auth/Registration';
 import Logout from './auth/Logout';
 import CreateMessage from './inbox/CreateMessage';
 import SentMessages from './inbox/SentMessages';
+import MessageDetails from './inbox/MessageDetails';
 
 
 const router = createBrowserRouter([
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
         path: 'sent',
         element: <SentMessages></SentMessages>
       },
+      {
+        path: 'message/:id',
+        element: <MessageDetails></MessageDetails>
+      }
     ],
   },
 ]);

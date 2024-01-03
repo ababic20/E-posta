@@ -12,6 +12,7 @@ interface InboxProps {
 const Inbox : React.FC<InboxProps> = ({ userId }) => {
 
     const [messages, setMessages] = useState<Message[]>([]);
+    const [viewDetails, setViewDetails] = useState(false);
     useEffect(() => {
       const fetchMessages = async () => {
         try {
