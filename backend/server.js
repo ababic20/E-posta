@@ -1,13 +1,15 @@
 const express = require('express')
+var cors = require('cors')
 const bodyParser = require('body-parser');
 const RestUser = require("./services/restUser.js");
 const restuser = new RestUser();
 const RestMessages = require("./services/restMessages.js");
 const restmessages = new RestMessages();
 const app = express()
-const port = 3000
+const port = 3001
 
 app.use(bodyParser.json());
+app.use(cors())
 
 app.get('/', (req, res) => {
   res.send('Hello World!')

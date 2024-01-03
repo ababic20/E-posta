@@ -50,6 +50,7 @@ class RestUser {
     }
 
     setMessageStatus= function (req, res) {
+        console.log("Backend MSG ID: " + req.query.id);
         res.type("application/json");
         var messageID = req.query.id
         var mDao = new MessageDAO();

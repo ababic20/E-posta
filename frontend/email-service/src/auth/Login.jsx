@@ -7,7 +7,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  const backendUrl = "http://localhost:3000";
+  const backendUrl = "http://localhost:3001";
 
 
   const handleLogin = async () => {
@@ -24,6 +24,8 @@ const Login = () => {
 
     if (response.ok) {
       localStorage.setItem("loggedIn", true);
+      localStorage.setItem("userId", data[0].id);
+      localStorage.setItem("email", data[0].email);
       navigate("/");
     } else {
       setErrorMessage(data.message)

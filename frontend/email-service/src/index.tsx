@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 import {
   createBrowserRouter,
@@ -10,6 +11,8 @@ import ErrorElement from './layouts/ErrorElement';
 import Login from './auth/Login';
 import Registration from './auth/Registration';
 import Logout from './auth/Logout';
+import CreateMessage from './inbox/CreateMessage';
+import SentMessages from './inbox/SentMessages';
 
 
 const router = createBrowserRouter([
@@ -33,7 +36,15 @@ const router = createBrowserRouter([
       {
         path: 'logout',
         element: <Logout></Logout>
-      }
+      },
+      {
+        path: 'create-message',
+        element: <CreateMessage></CreateMessage>
+      },
+      {
+        path: 'sent',
+        element: <SentMessages></SentMessages>
+      },
     ],
   },
 ]);

@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Registration = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+const RegistrationForm = () => {
+  const [name, setname] = useState('');
+  const [last_name, setlast_name] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
-  const backendUrl = "http://localhost:3000";
+  const backendUrl = "http://localhost:3001";
 
   const handleLogin = async () => {
     const response = await fetch(`${backendUrl}/register`, {
@@ -16,7 +16,7 @@ const Registration = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ firstName, lastName, email, password }),
+      body: JSON.stringify({ name, last_name, email, password }),
     });
 
     const data = await response.json();
@@ -35,15 +35,15 @@ const Registration = () => {
       <input
         type="text"
         placeholder="First name"
-        value={email}
-        onChange={(e) => setFirstName(e.target.value)}
+        value={name}
+        onChange={(e) => setname(e.target.value)}
         className="input"
       />
       <input
         type="text"
         placeholder="Last name"
-        value={email}
-        onChange={(e) => setLastName(e.target.value)}
+        value={last_name}
+        onChange={(e) => setlast_name(e.target.value)}
         className="input"
       />
       <input
@@ -61,9 +61,10 @@ const Registration = () => {
         className="input"
       />
       <button onClick={handleLogin} className="button">
-        Login
+        Register
       </button>
     </div>
   );
 };
-export default Registration;
+
+export default RegistrationForm;
